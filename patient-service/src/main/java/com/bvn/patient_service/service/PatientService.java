@@ -5,6 +5,7 @@ import com.bvn.patient_service.dto.PatientResponseDTO;
 import com.bvn.patient_service.exception.EmailAlreadyExistsException;
 import com.bvn.patient_service.exception.PatientNotFoundException;
 import com.bvn.patient_service.grpc.BillingServiceGrpcClient;
+import com.bvn.patient_service.kafka.KafkaProducer;
 import com.bvn.patient_service.mapper.PatientMapper;
 import com.bvn.patient_service.model.Patient;
 import com.bvn.patient_service.repository.PatientRepository;
@@ -16,12 +17,15 @@ import java.util.UUID;
 
 @Service
 public class PatientService {
+
     private final PatientRepository patientRepository;
     private final BillingServiceGrpcClient billingServiceGrpcClient;
+    private final KafkaProducer kafkaProducer;
 
-    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient) {
+    public PatientService(PatientRepository patientRepository, BillingServiceGrpcClient billingServiceGrpcClient, KafkaProducer kafkaProducer) {
         this.patientRepository = patientRepository;
         this.billingServiceGrpcClient = billingServiceGrpcClient;
+        this.kafkaProducer = kafkaProducer;
     }
 
     public List<PatientResponseDTO> getPatients() {
@@ -47,6 +51,8 @@ public class PatientService {
                 patient.getName(),
                 patient.getEmail()
         );
+
+        kafkaProducer.sendEvent(patient);
 
         return PatientMapper.toDTO(patient);
     }
