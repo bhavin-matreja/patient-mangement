@@ -2,10 +2,10 @@ name: Build & Push All Microservice Docker Images
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
     types: [ closed ]
-    branches: [ main ]
+    branches: [ master ]
 
 env:
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
