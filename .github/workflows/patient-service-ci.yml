@@ -2,7 +2,7 @@ name: Push Patient Service Docker Image to Docker Hub
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'patient-service/src/**'
       - 'patient-service/pom.xml'
@@ -10,7 +10,7 @@ on:
 
   pull_request:
     types: [ closed ]
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'patient-service/src/**'
       - 'patient-service/pom.xml'
