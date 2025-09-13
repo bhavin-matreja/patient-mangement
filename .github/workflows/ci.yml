@@ -26,6 +26,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Fetch full history
+        run: git fetch --prune --unshallow
+
       - name: Check patient-service changes
         id: check_patient_service
         run: |
