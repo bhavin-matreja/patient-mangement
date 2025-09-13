@@ -23,4 +23,3 @@ COPY --from=builder ./app/target/api-gateway-0.0.1-SNAPSHOT.jar ./app.jar
 EXPOSE 4004
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
