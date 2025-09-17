@@ -204,7 +204,7 @@ jobs:
           GITOPS_REPO_TOKEN: ${{ secrets.GITOPS_REPO_TOKEN }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          apt-get update && apt-get install -y yq git
+          sudo apt-get update && apt-get install -y yq git
   
           git clone https://$GITOPS_REPO_TOKEN@github.com/bhavin-matreja/patient-management-manifest.git $GITOPS_DIR
           cd $GITOPS_DIR
