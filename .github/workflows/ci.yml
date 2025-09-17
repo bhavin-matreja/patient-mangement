@@ -196,6 +196,8 @@ jobs:
           docker build -t $IMAGE:$TAG -t $IMAGE:latest -f analytics-service/Dockerfile analytics-service
           docker push $IMAGE:$TAG
           docker push $IMAGE:latest
+      - name: Set up yq
+        uses: mikefarah/setup-yq@v3
 
       - name: Update image tag in GitOps repo
         env:
@@ -204,8 +206,6 @@ jobs:
           GITOPS_REPO_TOKEN: ${{ secrets.GITOPS_REPO_TOKEN }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          sudo apt-get update && apt-get install -y yq git
-  
           git clone https://$GITOPS_REPO_TOKEN@github.com/bhavin-matreja/patient-management-manifest.git $GITOPS_DIR
           cd $GITOPS_DIR
   
